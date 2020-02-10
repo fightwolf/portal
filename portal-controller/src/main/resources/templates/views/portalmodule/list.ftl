@@ -143,6 +143,7 @@
             $("#gvResult").html(portalmoduleObject.option.listHeader);
             portalmoduleObject.option.count = obj.count;
             for (var i = 0; i < obj.items.length; i++) {
+                obj.items[i].lastUpdateTimestamp=moment(obj.items[i].lastUpdateTimestamp).format("YYYY-MM-DD HH:mm:ss");
             }
             $("#gvResult").append($("#portalmoduleTemplate").render(obj.items));
             $.each($('.isAr'), function () {

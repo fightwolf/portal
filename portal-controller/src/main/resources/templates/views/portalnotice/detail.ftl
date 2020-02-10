@@ -217,8 +217,8 @@
 };
 $(document).ready(function () {
     var ue = UE.getEditor('txtContent', {initialFrameHeight: 320});
-    $("#txtcreate_timestamp").datetimepicker({format: 'Y-m-d', timepicker: false});
-    $("#txtlast_update_timestamp").datetimepicker({format: 'Y-m-d', timepicker: false});
+    $("#txtbegin_times").datetimepicker({format: 'Y-m-d', timepicker: false});
+    $("#txtend_times").datetimepicker({format: 'Y-m-d', timepicker: false});
     uploadAttachment.init();
     $("#btnUpLogo").click(function () {
         uploadAttachment.position = 0;
