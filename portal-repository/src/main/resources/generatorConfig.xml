@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE generatorConfiguration        PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="application.properties"/>
+    <context id="write" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="autoDelimitKeywords" value="true"/>        <!-- plugin -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="com.pab.framework.portal.utils.mybatis.ExtendJavaGeneratorPlugin"/>        <!-- 取消生成的代码注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>        <!-- 连接配置 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="${jdbc.url}" userId="${jdbc.username}"
+                        password="${jdbc.password}"></jdbcConnection>        <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径 -->
+        <javaModelGenerator targetPackage="com.pab.framework.portal.repository.persistence.mybatis.entity.portal"
+                            targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>        <!-- javaClientGenerator是应用接口的生成信息 -->
+        <javaClientGenerator type="ANNOTATEDMAPPER"
+                             targetPackage="com.pab.framework.portal.repository.persistence.mybatis.provider.portal.autogenerate.write"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <table tableName="%" catalog="portals" enableCountByExample="false" enableDeleteByExample="true"
+               enableUpdateByExample="true" selectByExampleQueryId="false" enableSelectByExample="false"
+               enableSelectByPrimaryKey="false" delimitAllColumns="true" delimitIdentifiers="true">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <ignoreColumn column="create_timestamp"/>
+            <ignoreColumn column="last_update_timestamp"/>
+        </table>
+    </context>
+    <context id="read" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>        <!-- plugin -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="com.pab.framework.portal.utils.mybatis.ExtendJavaGeneratorPlugin"/>        <!-- 取消生成的代码注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>        <!-- 连接配置 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="${jdbc.url}" userId="${jdbc.username}"
+                        password="${jdbc.password}"></jdbcConnection>        <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径 -->
+        <javaModelGenerator targetPackage="com.pab.framework.portal.repository.persistence.mybatis.entity.portal"
+                            targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>        <!-- javaClientGenerator是应用接口的生成信息 -->
+        <javaClientGenerator type="ANNOTATEDMAPPER"
+                             targetPackage="com.pab.framework.portal.repository.persistence.mybatis.provider.portal.autogenerate.read"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <table tableName="%" catalog="portals" delimitIdentifiers="true" enableInsert="false"
+               enableDeleteByPrimaryKey="false" enableUpdateByPrimaryKey="false" enableCountByExample="true"
+               delimitAllColumns="true" enableDeleteByExample="false" enableUpdateByExample="false"
+               selectByExampleQueryId="true" enableSelectByExample="true">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,49 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans       http://www.springframework.org/schema/beans/spring-beans.xsd       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="dataSourceMaster" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="filters" value="stat"/>
+        <property name="maxActive" value="500"/>
+        <property name="initialSize" value="10"/>
+        <property name="maxWait" value="60000"/>
+        <property name="minIdle" value="1"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="masterScanner">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
+        <property name="basePackage"
+                  value="com.pab.framework.portal.repository.persistence.mybatis.provider.portal.handwrite"/>
+    </bean>
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceMaster"/>
+    </bean>
+    <bean id="sqlSessionBuyCarNewCarMaster" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory1"/>
+    </bean>
+    <aop:config>
+        <aop:pointcut id="appService" expression="execution(* com.pab.framework.portal.biz.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice1" pointcut-ref="appService"/>
+    </aop:config>
+    <tx:advice id="txAdvice1" transaction-manager="transactionManager1">
+        <tx:attributes>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager1"/>
+    <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceMaster"/>
+    </bean>
+</beans>
